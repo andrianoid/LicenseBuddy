@@ -1,0 +1,10 @@
+{
+	"partition_global_id": "<your-value-here>",
+	
+	"client_id":"<your-value-here>",
+	"client_secret":"<your-value-here>",
+	"client_scopes":"PM.Group.Read",
+	
+	"token_url":"https://cloud.uipath.com/identity_/connect/token",
+	"base_orch_url":"https://cloud.uipath.com"
+}
