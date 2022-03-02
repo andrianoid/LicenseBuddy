@@ -1,4 +1,9 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="getGroupSummaryUsingPowershell" sap:VirtualizedContainerService.HintSize="1212,1927.33333333333" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="getGroupSummaryUsingPowershell" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="out_groupResultsObject" Type="OutArgument(njl:JArray)" />
+  </x:Members>
+  <sap:VirtualizedContainerService.HintSize>761,2008</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="29">
       <x:String>System.Activities</x:String>
@@ -66,17 +71,13 @@
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Top Sequence" sap:VirtualizedContainerService.HintSize="554.666666666667,1862.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_2">
+  <Sequence DisplayName="Top Sequence" sap:VirtualizedContainerService.HintSize="554,1943" sap2010:WorkflowViewState.IdRef="Sequence_2">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="powershellContent" />
       <Variable x:TypeArguments="x:String" Name="psConfig" />
       <Variable x:TypeArguments="sco:Collection(sma:PSCustomObject)" Name="psOutput" />
       <Variable x:TypeArguments="x:String" Name="psResults" />
-      <Variable x:TypeArguments="x:String" Name="outputFilePath">
-        <Variable.Default>
-          <Literal x:TypeArguments="x:String">powershell/exportFiles/licenseBuddyExport.json</Literal>
-        </Variable.Default>
-      </Variable>
+      <Variable x:TypeArguments="x:String" Default="powershell/exportFiles/licenseBuddyExport.json" Name="outputFilePath" />
       <Variable x:TypeArguments="x:String" Name="groupResults" />
       <Variable x:TypeArguments="njl:JArray" Name="groupResultsObject" />
       <Variable x:TypeArguments="njl:JObject" Name="jsonObject" />
@@ -87,44 +88,52 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:ReadTextFile Content="[psConfig]" DisplayName="Read Text File" FileName="powershell\config.json" sap:VirtualizedContainerService.HintSize="512.666666666667,80.6666666666667" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
-    <ui:ReadTextFile Content="[powershellContent]" DisplayName="Read Text File" FileName="powershell\get-group-summary.ps1" sap:VirtualizedContainerService.HintSize="512.666666666667,80.6666666666667" sap2010:WorkflowViewState.IdRef="ReadTextFile_2" />
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="512.666666666667,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[psConfig]" />
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="512.666666666667,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_2" Message="[powershellContent]" />
-    <ui:InvokePowerShell x:TypeArguments="sma:PSCustomObject" ContinueOnError="{x:Null}" CommandText="[powershellContent]" DisplayName="Invoke Power Shell" sap:VirtualizedContainerService.HintSize="512.666666666667,58.6666666666667" sap2010:WorkflowViewState.IdRef="InvokePowerShell`1_17" IsScript="True" Output="[psOutput]">
+    <ui:ReadTextFile Content="[psConfig]" DisplayName="Read Text File" FileName="powershell\config.json" sap:VirtualizedContainerService.HintSize="512,80" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
+    <ui:ReadTextFile Content="[powershellContent]" DisplayName="Read Text File" FileName="powershell\get-group-summary.ps1" sap:VirtualizedContainerService.HintSize="512,80" sap2010:WorkflowViewState.IdRef="ReadTextFile_2" />
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="512,93" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[psConfig]" />
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="512,93" sap2010:WorkflowViewState.IdRef="LogMessage_2" Message="[powershellContent]" />
+    <ui:InvokePowerShell x:TypeArguments="sma:PSCustomObject" ContinueOnError="{x:Null}" CommandText="[powershellContent]" DisplayName="Invoke Power Shell" sap:VirtualizedContainerService.HintSize="512,59" sap2010:WorkflowViewState.IdRef="InvokePowerShell`1_17" IsScript="True" Output="[psOutput]">
       <ui:InvokePowerShell.PowerShellVariables>
         <InArgument x:TypeArguments="x:String" x:Key="rawConfig">[psConfig]</InArgument>
       </ui:InvokePowerShell.PowerShellVariables>
     </ui:InvokePowerShell>
-    <ui:ReadTextFile Content="[groupResults]" DisplayName="Read Text File" FileName="[outputFilePath]" sap:VirtualizedContainerService.HintSize="512.666666666667,80.6666666666667" sap2010:WorkflowViewState.IdRef="ReadTextFile_3" />
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="512.666666666667,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_3" Message="[groupResults]" />
-    <ui:DeserializeJsonArray DisplayName="Deserialize JSON Array" sap:VirtualizedContainerService.HintSize="512.666666666667,62" sap2010:WorkflowViewState.IdRef="DeserializeJsonArray_1" JsonArray="[groupResultsObject]" JsonString="[groupResults]" />
-    <ui:ForEach x:TypeArguments="njl:JObject" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="512.666666666667,669.333333333333" sap2010:WorkflowViewState.IdRef="ForEach`1_5" Values="[groupResultsObject]">
+    <ui:ReadTextFile Content="[groupResults]" DisplayName="Read Text File" FileName="[outputFilePath]" sap:VirtualizedContainerService.HintSize="512,80" sap2010:WorkflowViewState.IdRef="ReadTextFile_3" />
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="512,93" sap2010:WorkflowViewState.IdRef="LogMessage_3" Message="[groupResults]" />
+    <ui:DeserializeJsonArray DisplayName="Deserialize JSON Array" sap:VirtualizedContainerService.HintSize="512,60" sap2010:WorkflowViewState.IdRef="DeserializeJsonArray_1" JsonArray="[groupResultsObject]" JsonString="[groupResults]" />
+    <Assign sap:VirtualizedContainerService.HintSize="512,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+      <Assign.To>
+        <OutArgument x:TypeArguments="njl:JArray">[out_groupResultsObject]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="njl:JArray">[groupResultsObject]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:ForEach x:TypeArguments="njl:JObject" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="512,660" sap2010:WorkflowViewState.IdRef="ForEach`1_5" Values="[groupResultsObject]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="njl:JObject">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="njl:JObject" Name="group" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="476,541.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="476,535" sap2010:WorkflowViewState.IdRef="Sequence_3">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;=== &quot;+group(&quot;GroupName&quot;).ToString]" />
-            <ui:ForEach x:TypeArguments="njl:JObject" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="434,314.666666666667" sap2010:WorkflowViewState.IdRef="ForEach`1_6" Values="[group(&quot;Members&quot;)]">
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,93" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;=== &quot;+group(&quot;GroupName&quot;).ToString]" />
+            <ui:ForEach x:TypeArguments="njl:JObject" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="434,310" sap2010:WorkflowViewState.IdRef="ForEach`1_6" Values="[group(&quot;Members&quot;)]">
               <ui:ForEach.Body>
                 <ActivityAction x:TypeArguments="njl:JObject">
                   <ActivityAction.Argument>
                     <DelegateInArgument x:TypeArguments="njl:JObject" Name="user" />
                   </ActivityAction.Argument>
-                  <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="376,186.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                  <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="376,185" sap2010:WorkflowViewState.IdRef="Sequence_4">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_6" Message="[&quot;- &quot; + user(&quot;UserName&quot;).ToString]" />
+                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,93" sap2010:WorkflowViewState.IdRef="LogMessage_6" Message="[&quot;- &quot; + user(&quot;UserName&quot;).ToString]" />
                   </Sequence>
                 </ActivityAction>
               </ui:ForEach.Body>
@@ -133,6 +142,6 @@
         </ActivityAction>
       </ui:ForEach.Body>
     </ui:ForEach>
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="512.666666666667,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_4" Message="[&quot;fin&quot;]" />
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="512,93" sap2010:WorkflowViewState.IdRef="LogMessage_4" Message="[&quot;fin&quot;]" />
   </Sequence>
 </Activity>
