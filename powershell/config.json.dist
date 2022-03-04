@@ -1,5 +1,7 @@
 {
 	"partition_global_id": "<your-value-here>",
+	"account_id": "<your-value-here>",
+	"tenant_name": "<your-value-here>",
 	
 	"client_id":"<your-value-here>",
 	"client_secret":"<your-value-here>",

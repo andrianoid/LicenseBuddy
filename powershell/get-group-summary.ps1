@@ -1,29 +1,42 @@
 ## See External Applications for information on registering your application: https://docs.uipath.com/automation-cloud/docs/about-external-applications
 
-
-
-
 #######################################################################################################################################################################
 #######################################################################################################################################################################
 #######################################################################################################################################################################
 #######################################################################################################################################################################
 #######################################################################################################################################################################
 
-
+###############################################################################
 #######
 ## Env Params
+
+if(Test-Path 'powershell/exportFiles/'){
+	## run from workflow
+	$config = $rawConfig | ConvertFrom-Json ## Invoking from workflow
+	$outputFileName = 'powershell/exportFiles/licenseBuddyExport-groups.json'
+} else {
+	$configPath = "config.json";
+	$config = Get-Content -Raw -Path $configPath | ConvertFrom-Json
+	$outputFileName = 'exportFiles/licenseBuddyExport-groups.json'
+}
 
 #### Use for standalone script
 #$configPath = "config.json";
 #$config = Get-Content -Raw -Path $configPath | ConvertFrom-Json
+#$outputFileName = 'exportFiles/licenseBuddyExport-groups.json'
 
+#if(!$config){
 #### Use if invoked from workflow
-$config = $rawConfig | ConvertFrom-Json ## Invoking from workflow
+#$config = $rawConfig | ConvertFrom-Json ## Invoking from workflow
+#$outputFileName = 'powershell/exportFiles/licenseBuddyExport-groups.json'
+#}
 
-$outputFileName = 'powershell/exportFiles/licenseBuddyExport.json'
+###############################################################################
+###############################################################################
+###############################################################################
+
 $partitionGlobalId = $config.partition_global_id
 $token_url = $config.token_url
-
 
 ## >>>>>>>>>>>>>>>>>>> ########################################################
 ##
@@ -87,9 +100,10 @@ foreach($group in $groupList){
 #		$userResponse = Invoke-WebRequest -Uri $userUrl -Method GET -Headers $headers -ContentType application/json
 #		$groupAllocationsResponse
 #		$currentUser = $userResponse.Content | ConvertFrom-Json
-		
+				
 		$userList += [PSCustomObject]@{
 			UserName = $member.DisplayName
+			UserEmail = $member.name
 			UserId = $member.identifier
 		}
 		$memberString += "`n- " + $member.DisplayName # + " (" + $member.identifier + ") "
@@ -111,4 +125,6 @@ foreach($group in $groupList){
 $jsonOutput = $groups | ConvertTo-Json -Depth 4
 $jsonOutput | Set-Content -Path $outputFileName
 
-return $groups
+
+
+#return $groups
